@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Search Schools</h2>
+<form method="get">{{ form.as_p }}<button type="submit">Search</button></form>
+<ul>
+{% for school in schools %}
+  <li>{{ school.name }}</li>
+{% empty %}
+  <li>No schools found.</li>
+{% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,224 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nigeria's most comprehensive school directory - Find, compare, and review schools across Nigeria">
+    <meta name="keywords" content="Nigeria schools, school directory, school reviews, compare schools, education Nigeria">
+    
+    <title>{% block title %}EduFind Nigeria | Find the Best Schools{% endblock %}</title>
+    
+    <!-- Favicon -->
+     
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/animations.css' %}">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="{% static 'images/hero-bg.jpg' %}" as="image">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                <span></span>
+            </div>
+            <div class="preloader-text">Loading EduFind Nigeria...</div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-inner">
+                <!-- Logo -->
+                <div class="logo">
+                    <a href="{% url 'core:home' %}">
+                        <img src="{% static 'images/logo.svg' %}" alt="EduFind Nigeria Logo" width="180" height="50">
+                    </a>
+                </div>
+                
+                <!-- Main Navigation -->
+                <nav class="main-nav">
+                    <ul class="nav-list">
+                        <li><a href="{% url 'core:home' %}" class="nav-link active">Home</a></li>
+                        <li><a href="{#% url 'schools:list' %}" class="nav-link">Schools</a></li>
+                        <li><a href="{#% url 'search:advanced' %}" class="nav-link">Search</a></li>
+                        <li><a href="#features" class="nav-link">Features</a></li>
+                        <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+                        <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                    </ul>
+                </nav>
+                
+                <!-- Auth Buttons -->
+                <div class="auth-buttons">
+                    {% if user.is_authenticated %}
+                        <div class="dropdown user-dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-circle"></i> My Account
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="userMenu">
+                                <li><a class="dropdown-item" href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="{% url 'favorites:list' %}">Favorites</a></li>
+                                <li><a class="dropdown-item" href="{% url 'reviews:my_reviews' %}">My Reviews</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <a href="{#% url 'accounts:login' %}" class="btn btn-outline">Login</a>
+                        <a href="{#% url 'accounts:register' %}" class="btn btn-primary">Register</a>
+                    {% endif %}
+                </div>
+                
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle" aria-label="Toggle navigation">
+                    <span class="toggle-bar"></span>
+                    <span class="toggle-bar"></span>
+                    <span class="toggle-bar"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-inner">
+            <nav class="mobile-nav">
+                <ul class="mobile-nav-list">
+                    <li><a href="{% url 'core:home' %}" class="mobile-nav-link active">Home</a></li>
+                    <li><a href="{#% url 'schools:list' %}" class="mobile-nav-link">Schools</a></li>
+                    <li><a href="{#% url 'search:advanced' %}" class="mobile-nav-link">Search</a></li>
+                    <li><a href="#features" class="mobile-nav-link">Features</a></li>
+                    <li><a href="#how-it-works" class="mobile-nav-link">How It Works</a></li>
+                    <li><a href="#testimonials" class="mobile-nav-link">Testimonials</a></li>
+                </ul>
+            </nav>
+            
+            <div class="mobile-auth-buttons">
+                {% if user.is_authenticated %}
+                    <a href="{#% url 'accounts:dashboard' %}" class="btn btn-outline btn-block">Dashboard</a>
+                    <a href="{#% url 'accounts:logout' %}" class="btn btn-primary btn-block">Logout</a>
+                {% else %}
+                    <a href="{#% url 'accounts:login' %}" class="btn btn-outline btn-block">Login</a>
+                    <a href="{#% url 'accounts:register' %}" class="btn btn-primary btn-block">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- About Column -->
+                <div class="footer-col about-col">
+                    <div class="footer-logo">
+                        <img src="{% static 'images/logo-white.svg' %}" alt="EduFind Nigeria Logo" width="180" height="50">
+                    </div>
+                    <p class="footer-about">
+                        EduFind Nigeria is the most comprehensive school directory platform in Nigeria, 
+                        helping parents and students discover, compare, and review schools across the country.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links Column -->
+                <div class="footer-col links-col">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'core:home' %}">Home</a></li>
+                        <li><a href="{#% url 'schools:list' %}">Schools Directory</a></li>
+                        <li><a href="{#% url 'search:advanced' %}">Advanced Search</a></li>
+                        <li><a href="#">Featured Schools</a></li>
+                        <li><a href="#">School Rankings</a></li>
+                        <li><a href="#">Advertise Your School</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Resources Column -->
+                <div class="footer-col resources-col">
+                    <h3 class="footer-title">Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Education News</a></li>
+                        <li><a href="#">School Admission Guides</a></li>
+                        <li><a href="#">Curriculum Comparisons</a></li>
+                        <li><a href="#">Parenting Tips</a></li>
+                        <li><a href="#">School Fees Guide</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Column -->
+                <div class="footer-col contact-col">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education Way, Lagos, Nigeria</li>
+                        <li><i class="fas fa-phone-alt"></i> +234 812 345 6789</li>
+                        <li><i class="fas fa-envelope"></i> info@edufind.ng</li>
+                    </ul>
+                    
+                    <div class="newsletter">
+                        <h4>Subscribe to Newsletter</h4>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Your email address" required>
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="copyright">
+                    &copy; <span id="current-year"></span> EduFind Nigeria. All Rights Reserved.
+                </div>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{% static 'home/js/main.js' %}"></script>
+    <script src="{% static 'home/js/animations.js' %}"></script>
+    
+    {% block extra_js %}{% endblock %}
+    
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
